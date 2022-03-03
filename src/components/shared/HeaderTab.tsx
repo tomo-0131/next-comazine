@@ -1,5 +1,5 @@
 function HeaderTab() {
-  return <div></div>;
+  return <div>HeaderTab</div>;
 }
 
 export default HeaderTab;
