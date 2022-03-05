@@ -1,11 +1,12 @@
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { db } from '../../server/firebase';
 
-export default function PostDescription({ posts }: any) {
-  console.log(posts);
+export default function PostDescription() {
+  const router = useRouter();
 
-  return <div>{posts}</div>;
+  return <div>{router.query.title}</div>;
 }
 
 // export async function getServerSideProps({ params }: any) {
