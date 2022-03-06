@@ -1,6 +1,5 @@
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
 import Moment from 'react-moment';
 import { UseAuthContext } from '../context/AuthContext';
@@ -23,7 +22,6 @@ interface Posts {
 const Feed: React.FC = () => {
   const { user } = UseAuthContext();
   const [posts, setPosts] = useState([]);
-  const router = useRouter();
 
   useEffect(() => {
     onSnapshot(query(collection(db, 'posts'), orderBy('timestamp', 'desc')), (snapshot: any) => {
@@ -58,15 +56,7 @@ const Feed: React.FC = () => {
         {/* Posts */}
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md: gap-6 p-2 md:p-6'>
           {posts.map((post: Posts) => (
-            <Link>
-            <button key={post.id}
-              onClick=(() => {
-                router.push({
-                  pathname: '/posts/[post.id]',
-                  query: { title: post.data().title },
-                })
-              })
-            >
+            <Link key={post.id} href={`/posts/${post.id}`}>
               <div className='border rounded-lg group cursor-pointer   hover:scale-105 transition-transform duration-200 ease-in-out'>
                 <img
                   className='h-60 w-full object-cover hover:opacity-30 hover:bg-gray-500'
@@ -89,7 +79,6 @@ const Feed: React.FC = () => {
                   {/* <img className='h-12 w-12 rounded-full' src={} /> */}
                 </div>
               </div>
-            </button>
             </Link>
           ))}
           <br />
